@@ -2,24 +2,57 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use App\Models\Veterinar;
+use App\Models\Ljubimac;
+use App\Models\Pregled;
+use App\Models\Log;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Kreiramo admin korisnika
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@local',
+            'password' => bcrypt('password'),
+            'uloga' => 'admin'
+        ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // Kreiramo veterinara
+        Veterinar::create([
+            'ime' => 'Dr. Petar',
+            'specijalizacija' => 'Opšta praksa',
+            'email' => 'petar@local'
+        ]);
+
+        // Kreiramo ljubimca
+        Ljubimac::create([
+            'ime' => 'Maza',
+            'vrsta' => 'Pas',
+            'rasa' => 'Labrador',
+            'starost' => 3,
+            'datum_rodjenja' => '2022-05-01',
+            'vlasnik_id' => 1
+        ]);
+
+
+        // Kreiramo pregled
+        Pregled::create([
+            'datum' => now(),
+            'opis' => 'Redovan pregled',
+            'ljubimac_id' => 1,
+            'veterinar_id' => 1,
+            'korisnik_id' => 1
+        ]);
+
+        // Kreiramo log
+        Log::create([
+            'korisnik_id' => 1,
+            'akcija' => 'Inicijalni unos podataka',
+            'datum' => now()
         ]);
     }
 }
